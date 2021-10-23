@@ -1,5 +1,6 @@
 # import boto3
 import json
+from os import replace
 
 # Document
 
@@ -16,7 +17,8 @@ def ocr(image_path):
     # response = textract.detect_document_text(Document={'Bytes': imageBytes})
     # response = textract.analyze_expense(Document={'Bytes': imageBytes})
     with open("temp.json", 'r') as f:
-        response = json.load(f)
+        json_str = f.read().replace('\'', '\"')
+        response = json.loads(json_str)
 
     # print(response)
 

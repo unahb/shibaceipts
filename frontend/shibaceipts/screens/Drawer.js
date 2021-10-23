@@ -46,7 +46,7 @@ export default function CustomDrawerContent(props) {
           color: 'gray',
         }}
       >
-        Account Value: {user.account_value}
+        Account Value: {user.account_value}Ð
       </Text>
       <DrawerContentScrollView {...props}>
         <DrawerItemList state={newState} {...rest} />
