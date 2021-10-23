@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { Camera } from 'expo-camera'
+import * as ImagePicker from 'expo-image-picker'
 
 import { MockCurrentUser } from '../mock_backend'
 import { MOCKDATA, APILOCATION } from '../constants'
@@ -34,6 +35,22 @@ export default function ReceiptScanner() {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>
   }
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    })
+
+    console.log(result)
+
+    if (!result.cancelled) {
+      setImage(result.uri)
+    }
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Camera
@@ -60,6 +77,54 @@ export default function ReceiptScanner() {
             }}
           >
             <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ alignSelf: 'left' }}
+            onPress={async () => {
+              let photo = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                quality: 1,
+              })
+
+              if (!photo.cancelled) {
+                console.log('photo', photo)
+                var formData = new FormData()
+                formData.append('userid', user.username)
+                formData.append('receipt', photo.uri)
+
+                fetch(`${APILOCATION}new-receipt`, {
+                  method: 'POST',
+                  body: formData,
+                })
+                  .then((response) => response.json())
+                  .then((json) => setPosts(json.data))
+              }
+            }}
+          >
+            <View
+              style={{
+                borderWidth: 2,
+                borderRadius: '50%',
+                borderColor: 'white',
+                height: 50,
+                width: 50,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <View
+                style={{
+                  borderWidth: 2,
+                  borderRadius: '50%',
+                  borderColor: 'white',
+                  height: 40,
+                  width: 40,
+                  backgroundColor: 'white',
+                }}
+              ></View>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             style={{ alignSelf: 'center' }}
