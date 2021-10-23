@@ -7,9 +7,9 @@ from base64 import b64encode
 import math
 
 # defining the total number of images for each
-num_hats = 1
+num_hats = 5
 num_glasses = 4
-num_neck = 4
+num_neck = 7
 num_shiba = 6
 num_poop = 9
 
