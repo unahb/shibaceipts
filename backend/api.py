@@ -35,7 +35,7 @@ def new_receipt():
     request.files.save(file_name)
 
     # run ocr on image and get the total value
-    total = ocr.ocr(file_name)
+    total, _receipt_items = ocr.ocr(file_name)
 
     # TODO: categorize the data
 
