@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 import Home from './screens/Home'
+import ReceiptScanner from './screens/ReceiptScanner'
 
 const Drawer = createDrawerNavigator()
 
@@ -15,6 +16,13 @@ export default function App() {
           component={Home}
           options={{
             drawerLabel: 'Home',
+          }}
+        />
+        <Drawer.Screen
+          name='ReceiptScanner'
+          component={ReceiptScanner}
+          options={{
+            drawerLabel: 'ReceiptScanner'
           }}
         />
       </Drawer.Navigator>
