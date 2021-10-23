@@ -37,6 +37,25 @@ export const MockPosts = [
   },
 ]
 
+export const MockMySchibaceipts = [
+  {
+    shibaceipt: {
+      location: 'https://media.discordapp.net/attachments/892561854503735346/901516583883669504/ITEM_PREVIEW1.png?width=631&height=631',
+      owner: 'ShibaInuLover31',
+      minter: 'ElonMustFan26',
+      value: '16,000D',
+    },
+  },
+  {
+    shibaceipt: {
+      location: 'https://media.discordapp.net/attachments/892561854503735346/901517092728217731/61515f22481e2c40598d1de8_Shiba20Man20-20Site20GIF.png?width=631&height=631',
+      owner: 'ShibaInuLover31',
+      minter: 'ShibaceiptsToTheMoon',
+      value: '16,000D',
+    },
+  },
+]
+
 export const MockCurrentUser = {
   username: 'ShibaInuLover31',
   avatar: 'https://media.discordapp.net/attachments/892561854503735346/895573192637296650/20150605_47a9ea.png?width=631&height=631',

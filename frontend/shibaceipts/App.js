@@ -6,13 +6,14 @@ import Home from './screens/Home'
 import ReceiptScanner from './screens/ReceiptScanner'
 import CustomDrawerContent from './screens/Drawer'
 import ViewShibaceipt from './screens/ViewShibaceipt'
+import MyShibaceipts from './screens/MyShibaceipts'
 
 const Drawer = createDrawerNavigator()
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />} >
+      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
         <Drawer.Screen
           name='Recent Shibaceipts'
           component={Home}
@@ -25,6 +26,13 @@ export default function App() {
           component={ReceiptScanner}
           options={{
             drawerLabel: 'Receipt Scanner',
+          }}
+        />
+        <Drawer.Screen
+          name='My Shibaceipts'
+          component={MyShibaceipts}
+          options={{
+            drawerLabel: 'My Shibaceipts',
           }}
         />
         <Drawer.Screen
