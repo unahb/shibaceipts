@@ -78,5 +78,5 @@ export const MockMySchibaceipts = [
 export const MockCurrentUser = {
   username: 'ShibaInuLover31',
   avatar: 'https://media.discordapp.net/attachments/892561854503735346/895573192637296650/20150605_47a9ea.png?width=631&height=631',
-  shibaceipts_count: 21,
+  account_value: '21,000',
 }

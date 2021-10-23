@@ -31,7 +31,7 @@ export default function CustomDrawerContent(props) {
           color: 'gray',
         }}
       >
-        Current Shibaceipts: {MockCurrentUser.shibaceipts_count}
+        Account Value: {MockCurrentUser.account_value}
       </Text>
       <DrawerContentScrollView {...props}>
         <DrawerItemList state={newState} {...rest} />
