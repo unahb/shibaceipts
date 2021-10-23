@@ -53,6 +53,7 @@ def new_receipt():
         rf.write(decoded_data)
 
     # return nft url to the frontend
+    print(img_url)
     return {'"url":' + img_url}
 
 
