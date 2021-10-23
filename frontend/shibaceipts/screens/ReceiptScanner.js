@@ -39,10 +39,17 @@ export default function ReceiptScanner() {
               alignSelf: 'flex-end',
             }}
             onPress={() => {
-              setType(type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back)
+              setType(
+                type === Camera.Constants.Type.back
+                  ? Camera.Constants.Type.front
+                  : Camera.Constants.Type.back
+              )
             }}
           >
-            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
+            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
+              {' '}
+              Flip{' '}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{ alignSelf: 'center' }}
@@ -50,6 +57,14 @@ export default function ReceiptScanner() {
               if (cameraRef) {
                 let photo = await cameraRef.takePictureAsync()
                 console.log('photo', photo)
+                useEffect(() => {
+                  fetch(`${APILOCATION}new-receipt`, {
+                    method: 'POST',
+                    body: photo,
+                  })
+                    .then((response) => response.json())
+                    .then((json) => setPosts(json.data))
+                }, [])
               }
             }}
           >
