@@ -22,7 +22,6 @@ def ocr(image_path):
 
     # print(response)
 
-
     # print(response)
 
     # Print detected text
@@ -32,13 +31,12 @@ def ocr(image_path):
     for sf in response["ExpenseDocuments"][0]["SummaryFields"]:
         # print(sf)
         if "LabelDetection" in sf and \
-             sf["LabelDetection"]["Text"] == "TOTAL":
-                total = float(sf["ValueDetection"]["Text"])
-                break
-    
+                sf["LabelDetection"]["Text"] == "TOTAL":
+            total = float(sf["ValueDetection"]["Text"])
+            break
+
     if total == None:
         raise ValueError("Could not find TOTAL in receipt")
-
 
     receipt_items = []
     name_boxes = []
@@ -49,7 +47,7 @@ def ocr(image_path):
         name_box = i["LineItemExpenseFields"][0]["ValueDetection"]["Geometry"]["BoundingBox"]
         price_box = i["LineItemExpenseFields"][1]["ValueDetection"]["Geometry"]["BoundingBox"]
 
-        receipt_items.append((j,k))
+        receipt_items.append((j, k))
         name_boxes.append(name_box)
         price_boxes.append(price_box)
 
@@ -61,6 +59,7 @@ def ocr(image_path):
     #             print('\033[94m' + item["Text"] + '\033[0m')
     #             return data.split(":")[1].strip()
     return total, receipt_items, name_boxes, price_boxes
+
 
 def annotate_img(image_path, name_boxes, price_boxes):
     import matplotlib.pyplot as plt
@@ -82,19 +81,37 @@ def annotate_img(image_path, name_boxes, price_boxes):
     for box in name_boxes:
         width, height, left, top = \
             box["Width"], box["Height"], box["Left"], box["Top"]
-        rect = patches.Rectangle((left*w, h*top), width*w, height*h, linewidth=1, edgecolor='r', facecolor='none')
+        rect = patches.Rectangle(
+            (left*w, h*top), width*w, height*h, linewidth=1, edgecolor='r', facecolor='none')
         ax.add_patch(rect)
 
     for box in price_boxes:
         width, height, left, top = \
             box["Width"], box["Height"], box["Left"], box["Top"]
-        rect = patches.Rectangle((left*w, h*top), width*w, height*h, linewidth=1, edgecolor='g', facecolor='none')
+        rect = patches.Rectangle(
+            (left*w, h*top), width*w, height*h, linewidth=1, edgecolor='g', facecolor='none')
         ax.add_patch(rect)
 
     plt.axis('off')
     plt.savefig(new_path, dpi=600)
 
-
+    # upload the image to imgur
+    client_id = '678b119f0fd6be0'
+    headers = {"Authorization": 'Client-ID ' + client_id}
+    api_key = 'bbe58733b5b752b0bca73eedb727d265e13f16c8'
+    url = "https://api.imgur.com/3/upload.json"
+    r = requests.post(
+        url,
+        headers=headers,
+        data={
+            'key': api_key,
+            'image': b64encode(open("generated_images/final.png", 'rb').read()),
+            'type': 'base64',
+            'name': file_name,
+            'title': file_name
+        }
+    )
+    return (r.json()['data']['link'])
 
 
 total, receipt_items, nb, pb = ocr("user_data/test_png.png")
