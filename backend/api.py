@@ -2,6 +2,8 @@ from flask import Flask, request
 import json
 import imgur-uploader
 import time
+import ocr
+import nft
 
 app = Flask(__name__)
 
@@ -17,29 +19,29 @@ def get_shibaceipts():
 
 @app.route("/new-receipt", methods = ['POST'])
 def new_receipt():
-    # poopoo
-
     # accept an image, save it
     userid = request.form['userid']
-    file_name = str(userid) + "_" + str(time.time())
+    file_name = "raw_images/" + str(userid) + "_" + str(time.time())
     request.files.save(file_name)
 
-    # run ocr on image
-    
+    # run ocr on image and get the total value
+    total = ocr.ocr(file_name)
 
+    # TODO: categorize the data
 
-
-    # categorize the data
-    # generate string to use to make nft image
+    # generate string to use to make nft image using the total amount
+    # higher value = better nft
+    img_url = nft.generate_nft(total, file_name)
 
     # update the global data
     with open("./global_data/global.json", "w") as rf:
         decoded_data = json.load(rf)
-        decoded_data.update({'"username:"' + userid + ':"' + img_url + '"'})
+        decoded_data.update({'"username":' + userid + '","url":' + img_url + '"'})
         json.dumps(decoded_data)
         rf.write(decoded_data)
 
-    return
+    # return nft url to the frontend
+    return {'"url":' + img_url}
 
 @app.route("/spending", methods = ['POST'])
 def spending():
