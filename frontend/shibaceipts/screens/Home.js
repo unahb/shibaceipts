@@ -5,7 +5,6 @@ import { MockPosts } from '../mock_backend'
 import { MOCKDATA, APILOCATION } from '../constants'
 
 const renderItem = (item, navigation) => {
-  console.log(item)
   return (
     <Card>
       <View>
