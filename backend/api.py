@@ -32,8 +32,11 @@ def get_current_user():
 def new_receipt():
     # accept an image, save it
     userid = request.form['userid']
-    file_name = "raw_images/" + str(userid) + "_" + str(time.time())
-    request.files.save(file_name)
+    file_name = "raw_images/" + str(userid) + "_" + str(time.time()) + ".png"
+    # get image from base64
+    b64_image = request.form['receipt']
+    with open(file_name, "wb") as fh:
+        fh.write(b64_image.decode('base64'))
 
     # run ocr on image and get the total value
     total, _receipt_items = ocr.ocr(file_name)
