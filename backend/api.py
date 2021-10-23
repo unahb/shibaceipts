@@ -5,8 +5,6 @@ import time
 import ocr
 import nft
 
-hats = []
-glasses = ["none", "heart", "laser", ""]
 limit = 400
 
 app = Flask(__name__)
@@ -44,7 +42,7 @@ def new_receipt():
     # generate string to use to make nft image using the total amount
     # higher value = better nft
     img_url = nft.generate_nft(
-        total, file_name, len(hats), len(glasses), limit)
+        total, file_name, limit)
 
     # update the global data
     with open("./global_data/global.json", "w") as rf:
