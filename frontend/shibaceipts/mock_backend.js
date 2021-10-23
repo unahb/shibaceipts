@@ -21,3 +21,9 @@ export const MockPosts = [
     shibaceipt: 'https://media.discordapp.net/attachments/892561854503735346/901340319084314644/Capture-5.png?width=665&height=631',
   },
 ]
+
+export const MockCurrentUser = {
+  username: 'ShibaInuLover31',
+  avatar: 'https://media.discordapp.net/attachments/892561854503735346/895573192637296650/20150605_47a9ea.png?width=631&height=631',
+  shibaceipts_count: 21
+}

@@ -40,7 +40,7 @@ export default function Home() {
           borderRadius: 100,
         }}
       >
-        <Icon name='photo_camera' type='material' size={30} color='#01a699' />
+        <Icon name='camera' type='material' size={30} color='#01a699' />
       </TouchableOpacity>
       <FlatList data={MockPosts} keyExtractor={(item) => item.shibaceipt} renderItem={({ item }) => renderItem(item)} />
     </View>
