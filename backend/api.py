@@ -89,7 +89,6 @@ def new_receipt():
     # return nft url to the frontend
     return json.dumps(decoded_data)
 
-
 @app.route("/spending", methods=['POST'])
 def spending():
     userid = request.form['userid']
