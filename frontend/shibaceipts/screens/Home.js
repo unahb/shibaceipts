@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, View, TouchableOpacity, StyleSheet } from 'react-native'
 import { Card, Button, Icon, Text, Image, FAB } from 'react-native-elements'
 import { MockPosts } from '../mock_backend'
+import { MOCKDATA, APILOCATION } from '../constants'
 
 const renderItem = (item, navigation) => {
+  console.log(item)
   return (
     <Card>
       <View>
@@ -25,6 +27,20 @@ const renderItem = (item, navigation) => {
 }
 
 export default function Home({ navigation }) {
+  //console.log(JSON.stringify(MockPosts))
+  const [posts, setPosts] = useState([])
+  
+  useEffect(() => {
+    if (MOCKDATA) setPosts(MockPosts)
+    else {
+      fetch(`${APILOCATION}get-shibaceipts`, {
+        method: 'GET',
+      })
+        .then((response) => response.json())
+        .then((json) => setPosts(json.data))
+    }
+  }, [])
+
   return (
     <View>
       <TouchableOpacity
@@ -45,7 +61,7 @@ export default function Home({ navigation }) {
       >
         <Icon name='camera' type='material' size={30} color='#01a699' />
       </TouchableOpacity>
-      <FlatList data={MockPosts} keyExtractor={(item) => item.shibaceipt} renderItem={({ item }) => renderItem(item, navigation)} />
+      <FlatList data={posts} keyExtractor={(item) => item.shibaceipt} renderItem={({ item }) => renderItem(item, navigation)} />
     </View>
   )
 }

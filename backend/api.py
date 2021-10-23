@@ -1,6 +1,6 @@
 from flask import Flask, request
 import json
-import imgur-uploader
+#import imgur-uploader
 import time
 import ocr
 import nft
