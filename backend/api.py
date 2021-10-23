@@ -49,7 +49,7 @@ def new_receipt():
     new_entry["minter"] = userid
     new_entry["location"] = img_url
     new_entry["value"] = total
-    new_entry["expiration"] = datetime.now()
+    new_entry["expiration"] = str(datetime.now())
 
     user_entry = {}
     user_entry["username"] = userid
@@ -60,15 +60,15 @@ def new_receipt():
     global_entry["shibaceipt"] = new_entry
 
     # update the global data
-    with open("./global_data/global.json", "w") as rf:
+    with open("./global_data/global.json", "r") as rf:
         decoded_data = json.load(rf)
         decoded_data.update(global_entry)
-        json.dumps(decoded_data)
-        rf.write(decoded_data)
+    with open("./global_data/global.json", "w") as rf:    
+        rf.write(json.dumps(decoded_data))
 
     # create the json version of the items bought and cost
     item_dict = {}
-    for k,v in _receipt_items:
+    for k, v in _receipt_items:
         item_dict[k] = v
 
     # update location, owner, minter and total value
@@ -76,15 +76,15 @@ def new_receipt():
     json_obj["location"] = img_url
     json_obj["owner"] = userid
     json_obj["minter"] = userid
-    json_obj["value"] = total 
+    json_obj["value"] = total
     json_obj["data"] = item_dict
-    
+
     # update the user data
-    with open("./user_data/receipts.json", "w") as rf:
+    with open("./user_data/receipts.json", "r") as rf:
         decoded_data = json.load(rf)
         decoded_data.update(json_obj)
-        json.dumps(decoded_data)
-        rf.write(decoded_data)
+    with open("./user_data/receipts.json", "w") as rf:
+        json.dumps(rf.write(json.dumps(decoded_data)))
 
     # return nft url to the frontend
     return json.dumps(decoded_data)

@@ -58,5 +58,5 @@ def ocr(image_path):
     return total, receipt_items
 
 
-receipt_items = ocr("user_data/test.jpg")
-print(receipt_items)
+# receipt_items = ocr("user_data/test.jpg")
+# print(receipt_items)
