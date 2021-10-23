@@ -1,12 +1,28 @@
 {
-    "shibas": [
+    "data": [
         {
-            "imgur": "https://i.imgur.com/XqQZQ.jpg",
-            "username": "Billy_Bob"
+            "user": {
+                "username": "user1",
+                "avatar": "https://avatars2.githubusercontent.com/u/11?v=4"
+            },
+            "shibaceipt": {
+                "location": "https://i.imgur.com/XqQZQ.jpg",
+                "owner": "Billy_Bob",
+                "minter": "Billy_Bob",
+                "value": "13,000"
+            }
         },
         {
-            "imgur": "https://i.imgur.com/BZ4aLmd.jpg",
-            "username": "Vivacia"
+            "user": {
+                "username": "user2",
+                "avatar": "https://avatars.githubusercontent.com/u/23278147?v=4"
+            },
+            "shibaceipt": {
+                "location": "https://i.imgur.com/XqQZQ.jpg",
+                "owner": "twin",
+                "minter": "Billy_Bob",
+                "value": "10,000"
+            }
         }
     ]
 }
