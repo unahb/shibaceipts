@@ -12,17 +12,24 @@ def ocr(image_path):
     textract = boto3.client('textract')
 
     # Call Amazon Textract
-    response = textract.detect_document_text(Document={'Bytes': imageBytes})
+    # response = textract.detect_document_text(Document={'Bytes': imageBytes})
+    response = textract.analyze_expense(Document={'Bytes': imageBytes})
 
     # print(response)
 
     # Print detected text
-    for item in response["Blocks"]:
-        if item["BlockType"] == "LINE":
-            if ("AMOUNT" in item["Text"]):
-                data = item["Text"]
-                return data.split(":")[1].strip()
-                # print('\033[94m' + item["Text"] + '\033[0m')
+    # print(response)
+    for i in response["ExpenseDocuments"][0]["LineItemGroups"][0]["LineItems"]:
+        for j in i["LineItemExpenseFields"][0]["ValueDetection"]["Text"]:
+            print(j)
+
+    # print(response["ExpenseDocuments"][0]["LineItemGroups"][0]["LineItems"][0]["LineItemExpenseFields"])
+    # for item in response["Blocks"]:
+    #     if item["BlockType"] == "LINE":
+    #         if ("AMOUNT" in item["Text"]):
+    #             data = item["Text"]
+    #             print('\033[94m' + item["Text"] + '\033[0m')
+    #             return data.split(":")[1].strip()
 
 
-# ocr("user_data/test.jpg")
+ocr("user_data/test.jpg")
