@@ -54,6 +54,8 @@ export const MockReceipts = [
     },
     key: 2
   }
+]
+
 export const MockMySchibaceipts = [
   {
     shibaceipt: {
