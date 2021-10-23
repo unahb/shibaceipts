@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, request
 import json
 import imgur-uploader
+import time
 
 app = Flask(__name__)
 
@@ -17,21 +18,41 @@ def get_shibaceipts():
 @app.route("/new-receipt", methods = ['POST'])
 def new_receipt():
     # poopoo
-    # accept an image, run ocr
+
+    # accept an image, save it
+    userid = request.form['userid']
+    file_name = str(userid) + "_" + str(time.time())
+    request.files.save(file_name)
+
+    # run ocr on image
+    
+
+
+
+    # categorize the data
+    # generate string to use to make nft image
+
+    # update the global data
+    with open("./global_data/global.json", "w") as rf:
+        decoded_data = json.load(rf)
+        decoded_data.update({'"username:"' + userid + ':"' + img_url + '"'})
+        json.dumps(decoded_data)
+        rf.write(decoded_data)
 
     return
 
 @app.route("/spending", methods = ['POST'])
 def spending():
-    # get what user this is
-    userid = "user1"
+    userid = request.form['userid']
     with open("./user_data/" + userid + ".json", "r") as rf:
         decoded_data = json.load(rf)
     return json.dumps(decoded_data)
 
 @app.route("/global-data", methods = ['GET'])
 def get_global_data():
-    return 
+    with open("./global_data/global.json", "r") as rf:
+        decoded_data = json.load(rf)
+    return json.dumps(decoded_data)
 
 @app.route("/view-goals", methods = ['GET'])
 def view_goals():
