@@ -6,10 +6,13 @@ import { Image, Text } from 'react-native-elements'
 import { MockCurrentUser } from '../mock_backend'
 
 export default function CustomDrawerContent(props) {
+   const { state, ...rest } = props
+   const newState = { ...state }
+   newState.routes = newState.routes.filter((item) => item.name !== 'Placeholder')
   return (
     <View>
       <Image
-        source={{uri: MockCurrentUser.avatar}}
+        source={{ uri: MockCurrentUser.avatar }}
         style={{
           width: 75,
           height: 75,
@@ -31,7 +34,7 @@ export default function CustomDrawerContent(props) {
         Current Shibaceipts: {MockCurrentUser.shibaceipts_count}
       </Text>
       <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
+        <DrawerItemList state={newState} {...rest} />
       </DrawerContentScrollView>
     </View>
   )

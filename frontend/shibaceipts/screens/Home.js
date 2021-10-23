@@ -3,7 +3,7 @@ import { FlatList, View, TouchableOpacity, StyleSheet } from 'react-native'
 import { Card, Button, Icon, Text, Image, FAB } from 'react-native-elements'
 import { MockPosts } from '../mock_backend'
 
-const renderItem = (item) => {
+const renderItem = (item, navigation) => {
   return (
     <Card>
       <View>
@@ -14,14 +14,17 @@ const renderItem = (item) => {
           </View>
         </Card.Title>
         <View style={{ alignItems: 'center' }}>
-          <Card.Image source={{ uri: item.shibaceipt }} style={{ width: 300, height: 300 }}></Card.Image>
+          <Card.Image
+            source={{ uri: item.shibaceipt.location }}
+            style={{ width: 300, height: 300 }}
+            onPress={() => navigation.navigate('View Shibaceipt', item.shibaceipt)}></Card.Image>
         </View>
       </View>
     </Card>
   )
 }
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
     <View>
       <TouchableOpacity
@@ -42,7 +45,7 @@ export default function Home() {
       >
         <Icon name='camera' type='material' size={30} color='#01a699' />
       </TouchableOpacity>
-      <FlatList data={MockPosts} keyExtractor={(item) => item.shibaceipt} renderItem={({ item }) => renderItem(item)} />
+      <FlatList data={MockPosts} keyExtractor={(item) => item.shibaceipt} renderItem={({ item }) => renderItem(item, navigation)} />
     </View>
   )
 }
