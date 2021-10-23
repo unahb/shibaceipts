@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 import Home from './screens/Home'
+import Receipts from './screens/Receipts'
 import ReceiptScanner from './screens/ReceiptScanner'
 import CustomDrawerContent from './screens/Drawer'
 import ViewShibaceipt from './screens/ViewShibaceipt'
@@ -19,6 +20,13 @@ export default function App() {
           component={Home}
           options={{
             drawerLabel: 'Home',
+          }}
+        />
+        <Drawer.Screen
+          name='Receipts'
+          component={Receipts}
+          options={{
+            drawerLabel: 'Receipts',
           }}
         />
         <Drawer.Screen

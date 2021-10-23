@@ -37,6 +37,23 @@ export const MockPosts = [
   },
 ]
 
+export const MockReceipts = [
+  {
+    receipt: {
+      date: 'october 420th, 2021',
+      image: 'https://cdn.discordapp.com/attachments/892561854503735346/901334491547705424/Screen_Shot_2021-10-23_at_12.58.14_AM.png',
+      text: 'COSTCO, EGGS $295483204'
+    },
+    key: 1
+  },
+  {
+    receipt: {
+      date: 'may 0th, 1000',
+      image: 'https://media.discordapp.net/attachments/892561854503735346/901381819356839946/how-to-keep-ducks-call-ducks-1615457181.png',
+      text: 'DUCK'
+    },
+    key: 2
+  }
 export const MockMySchibaceipts = [
   {
     shibaceipt: {
