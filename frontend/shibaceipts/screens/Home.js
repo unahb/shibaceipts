@@ -7,7 +7,7 @@ const renderItem = (item) => {
   return (
     <Card>
       <Card.Title>{item.user.username}</Card.Title> <Card.Divider />{' '}
-      <Card.Image source={{uri: item.shibaceipt}}>
+        <Card.Image source={{uri: item.shibaceipt}}>
       </Card.Image>
     </Card>
   )
