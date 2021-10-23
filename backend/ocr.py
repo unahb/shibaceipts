@@ -41,12 +41,17 @@ def ocr(image_path):
 
 
     receipt_items = []
+    name_boxes = []
+    price_boxes = []
     for i in response["ExpenseDocuments"][0]["LineItemGroups"][0]["LineItems"]:
         j = i["LineItemExpenseFields"][0]["ValueDetection"]["Text"]
         k = i["LineItemExpenseFields"][1]["ValueDetection"]["Text"]
+        name_box = i["LineItemExpenseFields"][0]["ValueDetection"]["Geometry"]["BoundingBox"]
+        price_box = i["LineItemExpenseFields"][1]["ValueDetection"]["Geometry"]["BoundingBox"]
+
         receipt_items.append((j,k))
-
-
+        name_boxes.append(name_box)
+        price_boxes.append(price_box)
 
     # print(response["ExpenseDocuments"][0]["LineItemGroups"][0]["LineItems"][0]["LineItemExpenseFields"])
     # for item in response["Blocks"]:
@@ -55,8 +60,45 @@ def ocr(image_path):
     #             data = item["Text"]
     #             print('\033[94m' + item["Text"] + '\033[0m')
     #             return data.split(":")[1].strip()
-    return total, receipt_items
+    return total, receipt_items, name_boxes, price_boxes
+
+def annotate_img(image_path, name_boxes, price_boxes):
+    import matplotlib.pyplot as plt
+    import matplotlib.patches as patches
+    from PIL import Image
+
+    path_split = image_path.split(".")
+    if len(path_split) == 1:
+        new_path = image_path + "_annotated"
+    else:
+        new_path = "".join(path_split[:-1] + ["_annotated", path_split[-1]])
+
+    im = Image.open(image_path)
+    w, h = im.size
+
+    _, ax = plt.subplots()
+    ax.imshow(im)
+
+    for box in name_boxes:
+        width, height, left, top = \
+            box["Width"], box["Height"], box["Left"], box["Top"]
+        rect = patches.Rectangle((left*w, h*top), width*w, height*h, linewidth=1, edgecolor='r', facecolor='none')
+        ax.add_patch(rect)
+
+    for box in price_boxes:
+        width, height, left, top = \
+            box["Width"], box["Height"], box["Left"], box["Top"]
+        rect = patches.Rectangle((left*w, h*top), width*w, height*h, linewidth=1, edgecolor='g', facecolor='none')
+        ax.add_patch(rect)
+
+    plt.axis('off')
+    plt.savefig(new_path, dpi=600)
 
 
+
+
+total, receipt_items, nb, pb = ocr("user_data/test_png.png")
+annotate_img("user_data/test_png.png", nb, pb)
+print(receipt_items)
 # receipt_items = ocr("user_data/test.jpg")
 # print(receipt_items)
