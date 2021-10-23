@@ -100,3 +100,5 @@ def annotate_img(image_path, name_boxes, price_boxes):
 total, receipt_items, nb, pb = ocr("user_data/test_png.png")
 annotate_img("user_data/test_png.png", nb, pb)
 print(receipt_items)
+# receipt_items = ocr("user_data/test.jpg")
+# print(receipt_items)

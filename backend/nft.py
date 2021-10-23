@@ -7,9 +7,9 @@ from base64 import b64encode
 import math
 
 # defining the total number of images for each
-num_hats = 1
+num_hats = 5
 num_glasses = 4
-num_neck = 4
+num_neck = 7
 num_shiba = 6
 num_poop = 9
 
@@ -53,8 +53,8 @@ def generate_nft(amount, file_name, limit):
     index_list = generate_index(amount, limit)
 
     # combine the hat and the glasses into one image
-    background = Image.open("default_images/hat" + str(math.floor(index_list[0])) + ".png").resize((2048, 2048))
-    foreground = Image.open("default_images/glasses" + str(math.floor(index_list[1])) + ".png").resize((2048, 2048))
+    foreground = Image.open("default_images/hat" + str(math.floor(index_list[0])) + ".png").resize((2048, 2048))
+    background = Image.open("default_images/glasses" + str(math.floor(index_list[1])) + ".png").resize((2048, 2048))
     result = Image.alpha_composite(background, foreground)
     result.save("generated_images/composite1.png")
 

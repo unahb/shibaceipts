@@ -1,10 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { Camera } from 'expo-camera'
+
+import { MockCurrentUser } from '../mock_backend'
+import { MOCKDATA, APILOCATION } from '../constants'
+
 export default function ReceiptScanner() {
   const [hasPermission, setHasPermission] = useState(null)
   const [cameraRef, setCameraRef] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back)
+  const [user, setUser] = useState({})
+
+  useEffect(() => {
+    if (MOCKDATA) setUser(MockCurrentUser)
+    else {
+      fetch(`${APILOCATION}get-current-user`, {
+        method: 'GET',
+      })
+        .then((response) => response.json())
+        .then((json) => setUser(json))
+    }
+  }, [])
+
   useEffect(() => {
     ;(async () => {
       const { status } = await Camera.requestPermissionsAsync()
@@ -50,6 +67,16 @@ export default function ReceiptScanner() {
               if (cameraRef) {
                 let photo = await cameraRef.takePictureAsync()
                 console.log('photo', photo)
+                var formData = new FormData()
+                formData.append('userid', user.username)
+                formData.append('receipt', photo.uri)
+
+                fetch(`${APILOCATION}new-receipt`, {
+                  method: 'POST',
+                  body: formData,
+                })
+                  .then((response) => response.json())
+                  .then((json) => setPosts(json.data))
               }
             }}
           >

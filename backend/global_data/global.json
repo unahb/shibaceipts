@@ -3,13 +3,14 @@
     {
       "user": {
         "username": "ElonMuskFan26",
-        "avatar": "https://media.discordapp.net/attachments/892561854503735346/901516583883669504/ITEM_PREVIEW1.png?width=631&height=631"
+        "avatar": "https://i.imgur.com/krUy477.jpg"
       },
       "shibaceipt": {
-        "location": "https://media.discordapp.net/attachments/892561854503735346/901516583883669504/ITEM_PREVIEW1.png?width=631&height=631",
+        "location": "https://i.imgur.com/l4tYRxK.jpg",
         "owner": "ElonMuskFan26",
         "minter": "ElonMuskFan26",
-        "value": "13,000D"
+        "value": 13000,
+        "expiration": "2021-10-24T20:21:58.740Z"
       }
     },
     {
@@ -18,10 +19,11 @@
         "avatar": "https://media.discordapp.net/attachments/892561854503735346/901340319084314644/Capture-5.png?width=665&height=631"
       },
       "shibaceipt": {
-        "location": "https://media.discordapp.net/attachments/892561854503735346/901340319084314644/Capture-5.png?width=665&height=631",
+        "location": "https://i.imgur.com/pABlxkH.jpg",
         "owner": "ShibaceiptsToTheMoon",
         "minter": "ShibaceiptsToTheMoon",
-        "value": "1000D"
+        "value": 1000,
+        "expiration": "2021-10-24T02:53:58.740Z"
       }
     },
     {
@@ -30,10 +32,11 @@
         "avatar": "https://media.discordapp.net/attachments/892561854503735346/895573192637296650/20150605_47a9ea.png?width=631&height=631"
       },
       "shibaceipt": {
-        "location": "https://media.discordapp.net/attachments/892561854503735346/895573192637296650/20150605_47a9ea.png?width=631&height=631",
+        "location": "https://i.imgur.com/JSqfdVI.jpg",
         "owner": "DogeEnthusiast",
         "minter": "ElonMustFan26",
-        "value": "16,000D"
+        "value": 16000,
+        "expiration": "2021-10-23T05:53:58.740Z"
       }
     }
   ]

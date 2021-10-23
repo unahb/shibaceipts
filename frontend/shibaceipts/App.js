@@ -47,7 +47,7 @@ export default function App() {
           name='View Shibaceipt'
           component={ViewShibaceipt}
           options={{
-            drawerLabel: 'View Shibaceipt',
+            drawerLabel: '',
           }}
         />
       </Drawer.Navigator>

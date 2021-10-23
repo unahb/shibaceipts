@@ -7,23 +7,23 @@ import { MockCurrentUser } from '../mock_backend'
 import { MOCKDATA, APILOCATION } from '../constants'
 
 export default function CustomDrawerContent(props) {
-   const { state, ...rest } = props
-   const newState = { ...state }
-   newState.routes = newState.routes.filter((item) => item.name !== 'Placeholder')
+  const { state, ...rest } = props
+  const newState = { ...state } //copy from state before applying any filter. do not change original state
+  newState.routes = newState.routes.filter((item) => item.name !== 'View Shibaceipts') //replace "Login' with your route name
 
-   const [user, setUser] = useState({})
+  const [user, setUser] = useState({})
 
-   useEffect(() => {
-     if (MOCKDATA) setUser(MockCurrentUser)
-     else {
-       fetch(`${APILOCATION}get-current-user`, {
-         method: 'GET',
-       })
-         .then((response) => response.json())
-         .then((json) => setUser(json))
-     }
-   }, [])
-  
+  useEffect(() => {
+    if (MOCKDATA) setUser(MockCurrentUser)
+    else {
+      fetch(`${APILOCATION}get-current-user`, {
+        method: 'GET',
+      })
+        .then((response) => response.json())
+        .then((json) => setUser(json))
+    }
+  }, [])
+
   return (
     <View>
       <Image
@@ -46,7 +46,7 @@ export default function CustomDrawerContent(props) {
           color: 'gray',
         }}
       >
-        Account Value: {user.account_value}
+        Account Value: {user.account_value}Ð
       </Text>
       <DrawerContentScrollView {...props}>
         <DrawerItemList state={newState} {...rest} />
