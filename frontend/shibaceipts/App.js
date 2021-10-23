@@ -12,7 +12,7 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator>
         <Drawer.Screen
-          name='Home'
+          name='Recent Shibaceipts'
           component={Home}
           options={{
             drawerLabel: 'Home',
