@@ -1,72 +1,71 @@
 import React from 'react'
-import {
-  Text,
-  Link,
-  HStack,
-  Center,
-  Heading,
-  Switch,
-  useColorMode,
-  NativeBaseProvider,
-  extendTheme,
-  VStack,
-  Code,
-} from 'native-base'
-import NativeBaseIcon from '../components/NativeBaseIcon'
+import { FlatList } from 'react-native'
+import { NativeBaseProvider, Thumbnail, ListItem } from 'native-base'
+import {MockPosts} from '../mock_backend'
 
-// Define the config
-const config = {
-  useSystemColorMode: false,
-  initialColorMode: 'dark',
-}
-
-// extend the theme
-export const theme = extendTheme({ config })
-
-
-export default function Home() {
+const renderItem = (item) => {
   return (
-    <NativeBaseProvider>
-      <Center
-        _dark={{ bg: 'blueGray.900' }}
-        _light={{ bg: 'blueGray.50' }}
-        px={4}
-        flex={1}
-      >
-        <VStack space={5} alignItems='center'>
-          <NativeBaseIcon />
-          <Heading size='lg'>Welcome to NativeBase</Heading>
-          <HStack space={2} alignItems='center'>
-            <Text>Edit</Text>
-            <Code>App.js</Code>
-            <Text>and save to reload.</Text>
-          </HStack>
-          <Link href='https://docs.nativebase.io' isExternal>
-            <Text color='primary.500' underline fontSize={'xl'}>
-              Learn NativeBase
-            </Text>
-          </Link>
-          <ToggleDarkMode />
-        </VStack>
-      </Center>
-    </NativeBaseProvider>
+      <p>{JSON.stringify(item)}</p>
   )
 }
 
-// Color Switch Component
-function ToggleDarkMode() {
-  const { colorMode, toggleColorMode } = useColorMode()
+export default function Home() {
+  console.log(MockPosts)
   return (
-    <HStack space={2} alignItems='center'>
-      <Text>Dark</Text>
-      <Switch
-        isChecked={colorMode === 'light' ? true : false}
-        onToggle={toggleColorMode}
-        aria-label={
-          colorMode === 'light' ? 'switch to dark mode' : 'switch to light mode'
-        }
+    <NativeBaseProvider>
+      <FlatList
+        data={MockPosts}
+        keyExtractor={(item) => item.shibaceipt}
+        renderItem={({ item }) => renderItem(item)}
       />
-      <Text>Light</Text>
-    </HStack>
+    </NativeBaseProvider>
+  )
+  return (
+    <NativeBaseProvider>
+      <View style={{ justifyContent: 'flex-start' }}>
+        <FlatList
+          data={MockPosts}
+          renderItem={({ item }) => (
+            <Card>
+              <CardItem>
+                <Left>
+                  <Thumbnail source={item.user.avatar} />
+                  <Body>
+                    <Text>Kofi</Text>
+                    <Text note>26 Feb 2018</Text>
+                  </Body>
+                </Left>
+              </CardItem>
+              <CardItem cardBody>
+                <Image source={item.shibaceipt} style={{ height: 200, width: null, flex: 1 }} />
+              </CardItem>
+              <CardItem style={{ height: 45 }}>
+                <Left>
+                  <Button transparent>
+                    <Icon name='ios-heart-outline' style={{ color: 'black' }} />
+                  </Button>
+                  <Button transparent>
+                    <Icon name='ios-chatbubbles-outline' style={{ color: 'black' }} />
+                  </Button>
+                  <Button transparent>
+                    <Icon name='ios-send-outline' style={{ color: 'black' }} />
+                  </Button>
+                </Left>
+              </CardItem>
+              <CardItem style={{ height: 20 }}>
+                <Text>lol</Text>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text>
+                    <Text style={{ fontWeight: '800' }}>kofi </Text>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Asperiores soluta dolor eveniet fugiat rem ullam laudantium, quod accusamus autem numquam maxime tempora nisi commodi unde. Nisi repudiandae culpa omnis doloremque!
+                  </Text>
+                </Body>
+              </CardItem>
+            </Card>
+          )}
+        />
+      </View>
+    </NativeBaseProvider>
   )
 }
