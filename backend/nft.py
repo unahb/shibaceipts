@@ -6,21 +6,22 @@ import requests
 from base64 import b64encode
 import math
 
-def generate_index(amount, limit):
+
+def generate_index(amount, num_hats, num_glasses, limit):
     hat = random.randint(1, int(amount))
     glasses = random.randint(1, int(amount))
-    hat_limit = limit/4
-    glasses_limit = limit/4
+    hat_limit = limit/num_hats
+    glasses_limit = limit/num_glasses
     hat_index = hat_limit/hat
-    if (hat_index >= 4):
-        hat_index = 4 - 1
+    if (hat_index >= num_hats):
+        hat_index = num_hats - 1
     glasses_index = glasses_limit/glasses
-    if (glasses_index >= 4):
-        glasses_index = 4 - 1
+    if (glasses_index >= num_glasses):
+        glasses_index = num_glasses - 1
     return (hat_index, glasses_index)
 
-def generate_nft(amount, filename):
-    hat_index, glasses_index = generate_index(amount, 5)
+def generate_nft(amount, file_name, num_hats, num_glasses, limit):
+    hat_index, glasses_index = generate_index(amount, num_hats, num_glasses, limit)
 
     # combine the hat and the glasses into one image
     background = Image.open("default_images/hat" + str(math.floor(hat_index)) + ".png").resize((2048, 2048))
@@ -46,11 +47,8 @@ def generate_nft(amount, filename):
             'key': api_key, 
             'image': b64encode(open("generated_images/final.png", 'rb').read()),
             'type': 'base64',
-            'name': filename,
-            'title': filename
+            'name': file_name,
+            'title': file_name
         }
     )
     return (r.json()['data']['link'])
-
-# if __name__ == '__main__':
-#     generate_nft(300, "test_1_varn")

@@ -1,24 +1,51 @@
 import React from 'react'
-import { FlatList } from 'react-native'
-import { Card, Button, Icon } from 'react-native-elements'
-import {MockPosts} from '../mock_backend'
+import { FlatList, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Card, Button, Icon, Text, Image, FAB } from 'react-native-elements'
+import { MockPosts } from '../mock_backend'
 
-const renderItem = (item) => {
+const renderItem = (item, navigation) => {
   return (
     <Card>
-      <Card.Title>{item.user.username}</Card.Title> <Card.Divider />{' '}
-      <Card.Image source={{uri: item.shibaceipt}}>
-      </Card.Image>
+      <View>
+        <Card.Title style={{ textAlign: 'left' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Image resizeMode='cover' source={{ uri: item.user.avatar }} style={{ width: 50, height: 50, borderRadius: '50%', marginRight: '15px' }} />
+            <Text>{item.user.username}</Text>{' '}
+          </View>
+        </Card.Title>
+        <View style={{ alignItems: 'center' }}>
+          <Card.Image
+            source={{ uri: item.shibaceipt.location }}
+            style={{ width: 300, height: 300 }}
+            onPress={() => navigation.navigate('View Shibaceipt', item.shibaceipt)}></Card.Image>
+        </View>
+      </View>
     </Card>
   )
 }
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
-      <FlatList
-        data={MockPosts}
-        keyExtractor={(item) => item.shibaceipt}
-        renderItem={({ item }) => renderItem(item)}
-      />
+    <View>
+      <TouchableOpacity
+        style={{
+          borderWidth: 1,
+          zIndex: 10,
+          borderColor: 'rgba(0,0,0,0.2)',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 70,
+          position: 'absolute',
+          bottom: 10,
+          right: 10,
+          height: 70,
+          backgroundColor: '#fff',
+          borderRadius: 100,
+        }}
+      >
+        <Icon name='camera' type='material' size={30} color='#01a699' />
+      </TouchableOpacity>
+      <FlatList data={MockPosts} keyExtractor={(item) => item.shibaceipt} renderItem={({ item }) => renderItem(item, navigation)} />
+    </View>
   )
 }
