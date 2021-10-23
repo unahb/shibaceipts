@@ -4,15 +4,18 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 
 import Home from './screens/Home'
 import Receipts from './screens/Receipts'
+import ReceiptScanner from './screens/ReceiptScanner'
+import CustomDrawerContent from './screens/Drawer'
+import ViewShibaceipt from './screens/ViewShibaceipt'
 
 const Drawer = createDrawerNavigator()
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
+      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />} >
         <Drawer.Screen
-          name='Home'
+          name='Recent Shibaceipts'
           component={Home}
           options={{
             drawerLabel: 'Home',
@@ -23,6 +26,20 @@ export default function App() {
           component={Receipts}
           options={{
             drawerLabel: 'Receipts',
+          }}
+        />
+        <Drawer.Screen
+          name='Receipt Scanner'
+          component={ReceiptScanner}
+          options={{
+            drawerLabel: 'Receipt Scanner',
+          }}
+        />
+        <Drawer.Screen
+          name='View Shibaceipt'
+          component={ViewShibaceipt}
+          options={{
+            drawerLabel: 'View Shibaceipt',
           }}
         />
       </Drawer.Navigator>
