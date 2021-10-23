@@ -1,7 +1,7 @@
 {
     "data": [
         {
-            "shibaceipt": {
+            "receipt": {
                 "location": "https://i.imgur.com/XqQZQ.jpg",
                 "owner": "Billy_Bob",
                 "minter": "Billy_Bob",
@@ -9,7 +9,7 @@
             }
         },
         {
-            "shibaceipt": {
+            "receipt": {
                 "location": "https://i.imgur.com/XqQZQ.jpg",
                 "owner": "twin",
                 "minter": "Billy_Bob",
