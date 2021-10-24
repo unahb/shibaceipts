@@ -9,7 +9,7 @@ import base64
 
 limit = 400
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static', static_folder='static')
 
 
 @app.route("/")
