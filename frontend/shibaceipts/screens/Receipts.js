@@ -72,16 +72,20 @@ function SingularReceipt({route}) {
   const entries = Object.entries(receipt)
   const uri = `${APILOCATION}${imgpath}`
   return (
-    <View>
-      <Image style={styles.singularReceipt} source={{uri}}></Image>
+    <View style={{ alignItems: 'center' }}>
+      <Image style={styles.singularReceipt} source={{ uri }}></Image>
       <FlatList
         data={entries}
         // Not guaranteed to be unique?
         keyExtractor={(item) => item[0]}
-        renderItem={r => {
+        renderItem={(r) => {
           const item_name = r.item[0]
           const item_price = r.item[1]
-          return (<Text>{item_name} - {item_price}</Text>)
+          return (
+            <Text>
+              {item_name} - {item_price}
+            </Text>
+          )
         }}
       />
     </View>
