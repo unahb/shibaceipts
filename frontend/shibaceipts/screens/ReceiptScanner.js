@@ -95,6 +95,7 @@ export default function ReceiptScanner() {
                 var formData = new FormData()
                 formData.append('userid', user.username)
                 formData.append('receipt', photo.uri)
+                formData.append('flip', 'no')
 
                 fetch(`${APILOCATION}new-receipt`, {
                   method: 'POST',
@@ -114,6 +115,7 @@ export default function ReceiptScanner() {
                 var formData = new FormData()
                 formData.append('userid', user.username)
                 formData.append('receipt', photo.uri)
+                formData.append('flip', 'yes')
 
                 fetch(`${APILOCATION}new-receipt`, {
                   method: 'POST',

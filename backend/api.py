@@ -58,7 +58,7 @@ def new_receipt():
     with open(file_name, "wb") as fh:
         fh.write(base64.b64decode(b64_image[len(header):]))
 
-    if(request.form['flip']):
+    if request.form['flip'] == 'yes':
         im = Image.open(file_name)
         out = im.transpose(PIL.Image.FLIP_LEFT_RIGHT)
         out.save(file_name)
