@@ -42,21 +42,47 @@ export const MockPosts = [
 
 export const MockReceipts = [
   {
-    receipt: {
-      date: 'october 420th, 2021',
-      image: 'https://cdn.discordapp.com/attachments/892561854503735346/901334491547705424/Screen_Shot_2021-10-23_at_12.58.14_AM.png',
-      text: 'COSTCO, EGGS $295483204'
+    location: 'static/test.jpg',
+    data: {
+      'MAGGI NOODLE': '8.99',
+      'SHIN RAMYUN': '14.69',
+      'KS 5DZ EGGS': '8.39',
+      'CREST MWASH': '10.49',
+      'CRISPY FRIES': '6.59',
+      'MIXED VEGG': '5.89',
+      'MAC & CHEESE': '14.69',
+      985695: '4.40-E',
+      'VIDALIA ONIO': '9.99',
+      'OF ITEMS SOLD': '8',
+      BROCCOLI: '5.99',
+      'CHKN CURRY': '14.99',
+      'TIKKA MASALA': '14.99',
+      'CAESAR SALAD': '8.42',
+      'CRISPY DILLI': '5.59',
+      'KS ADLT MULT': '10.99',
+      PANTENESHAMP: '9.99',
+      'CAUL STIR FR': '8.99',
+      '/1303131': '3.00-E',
+      'CHOC CHUNK': '7.99',
+      FILAJOGGER: '12.99',
+      '/1522624': '3.00-A',
+      '2% MILK 1GAL': '3.29',
+      'ORG MANGO': '5.99',
+      '0000261646 /1221712': '2.00-E',
+      'PANKO NUGGET': '12.49',
+      '0000261365 /744463': '4.00-E',
+      '/744463': '4.00-E',
+      HUMMUS: '6.99',
+      'ORG MATCHA': '19.99',
+      'MNOXDIL 6PK': '49.49',
+      'PLACKERS FLS': '9.99',
+      'OATMEAL 2/24': '4.99',
+      'CINNAMON BRD': '5.39',
+      'HN CHEERIOS': '7.99',
+      'PUMPKIN FLAX': '7.99',
+      '0000262676 / 993467': '3.00-E',
     },
-    key: 1
   },
-  {
-    receipt: {
-      date: 'may 0th, 1000',
-      image: 'https://media.discordapp.net/attachments/892561854503735346/901381819356839946/how-to-keep-ducks-call-ducks-1615457181.png',
-      text: 'DUCK'
-    },
-    key: 2
-  }
 ]
 
 export const MockMySchibaceipts = [
