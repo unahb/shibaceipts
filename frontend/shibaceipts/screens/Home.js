@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, View, TouchableOpacity, StyleSheet } from 'react-native'
 import { Card, Button, Icon, Text, Image, FAB } from 'react-native-elements'
+import { useIsFocused } from '@react-navigation/native'
 import Countdown from 'react-countdown'
+
 import { MockPosts } from '../mock_backend'
 import { MOCKDATA, APILOCATION } from '../constants'
 
@@ -31,6 +33,19 @@ export default function Home({ navigation }) {
   //console.log(JSON.stringify(MockPosts))
   const [posts, setPosts] = useState([])
   
+    const isFocused = useIsFocused()
+
+    useEffect(() => {
+      if (MOCKDATA) setPosts(MockPosts)
+      else {
+        fetch(`${APILOCATION}get-shibaceipts`, {
+          method: 'GET',
+        })
+          .then((response) => response.json())
+          .then((json) => setPosts(json.data))
+      }
+    }, [isFocused])
+
   useEffect(() => {
     if (MOCKDATA) setPosts(MockPosts)
     else {
