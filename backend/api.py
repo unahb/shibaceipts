@@ -1,11 +1,11 @@
 from flask import Flask, request
 import json
-# import imgur-uploader
+#import imgur-uploader
 import time
 import ocr
 import nft
 import datetime
-from base64 import decodestring
+import base64
 
 limit = 400
 
@@ -23,13 +23,11 @@ def get_shibaceipts():
         decoded_data = json.load(rf)
         return json.dumps(decoded_data)
 
-
 @app.route("/get-current-user", methods=['GET'])
 def get_current_user():
     with open("./user_data/profile.json", "r") as rf:
         decoded_data = json.load(rf)
         return json.dumps(decoded_data)
-
 
 @app.route("/new-receipt", methods=['POST'])
 def new_receipt():
@@ -39,12 +37,10 @@ def new_receipt():
     # get image from base64
     b64_image = request.form['receipt']
     with open(file_name, "wb") as fh:
-        fh.write(decodestring(b64_image))
+        fh.write(base64.b64decode(b64_image))
 
     # run ocr on image and get the total value
-    total, _receipt_items, nb, pb = ocr.ocr(file_name)
-    # TODO: varnika - add the edited receipt image imgur link (down below) to the user_data/receipts.json
-    link_to_edited = ocr.annotate_img(file_name, nb, pb)
+    total, _receipt_items = ocr.ocr(file_name)
 
     # generate string to use to make nft image using the total amount
     # higher value = better nft
@@ -71,7 +67,7 @@ def new_receipt():
     with open("./global_data/global.json", "r") as rf:
         decoded_data = json.load(rf)
         decoded_data.update(global_entry)
-    with open("./global_data/global.json", "w") as rf:
+    with open("./global_data/global.json", "w") as rf:    
         rf.write(json.dumps(decoded_data))
 
     # create the json version of the items bought and cost
@@ -96,7 +92,6 @@ def new_receipt():
 
     # return nft url to the frontend
     return json.dumps(decoded_data)
-
 
 @app.route("/spending", methods=['POST'])
 def spending():
