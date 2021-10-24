@@ -8,11 +8,14 @@ import base64
 import json
 from base64 import b64encode
 import math
+import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import random
 import string
 # Document
+
+matplotlib.use('Agg')
 
 
 def ocr(image_path):
@@ -26,7 +29,7 @@ def ocr(image_path):
     # Call Amazon Textract
     # response = textract.detect_document_text(Document={'Bytes': imageBytes})
     response = textract.analyze_expense(Document={'Bytes': imageBytes})
-    #with open("temp2.json", 'r') as f:
+    # with open("temp2.json", 'r') as f:
     #    json_str = f.read().replace('\'', '\"')
     #    response = json.loads(json_str)
 
