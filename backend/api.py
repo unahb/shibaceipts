@@ -31,6 +31,7 @@ def get_current_user():
 
 @app.route("/new-receipt", methods=['POST'])
 def new_receipt():
+    return json.dumps("{}") #disabled by Marc for now
     # accept an image, save it
     userid = request.form['userid']
     file_name = "raw_images/" + str(userid) + "_" + str(time.time()) + ".png"

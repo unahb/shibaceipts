@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
+import { Icon } from 'react-native-elements'
 import { Camera } from 'expo-camera'
+import * as ImagePicker from 'expo-image-picker'
 
 import { MockCurrentUser } from '../mock_backend'
 import { MOCKDATA, APILOCATION } from '../constants'
@@ -24,7 +26,7 @@ export default function ReceiptScanner() {
 
   useEffect(() => {
     ;(async () => {
-      const { status } = await Camera.requestPermissionsAsync()
+      const { status } = await Camera.requestCameraPermissionsAsync()
       setHasPermission(status === 'granted')
     })()
   }, [])
@@ -34,6 +36,22 @@ export default function ReceiptScanner() {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>
   }
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    })
+
+    console.log(result)
+
+    if (!result.cancelled) {
+      setImage(result.uri)
+    }
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Camera
@@ -52,14 +70,40 @@ export default function ReceiptScanner() {
         >
           <TouchableOpacity
             style={{
-              flex: 0.1,
-              alignSelf: 'flex-end',
+              borderWidth: 1,
+              zIndex: 10,
+              borderColor: 'rgba(0,0,0,0.2)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 70,
+              position: 'absolute',
+              bottom: 10,
+              right: 10,
+              height: 70,
+              backgroundColor: '#fff',
+              borderRadius: 100,
             }}
-            onPress={() => {
-              setType(type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back)
+            onPress={async () => {
+              let photo = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                quality: 1,
+              })
+
+              if (!photo.cancelled) {
+                console.log('photo', photo)
+                var formData = new FormData()
+                formData.append('userid', user.username)
+                formData.append('receipt', photo.uri)
+
+                fetch(`${APILOCATION}new-receipt`, {
+                  method: 'POST',
+                  body: formData,
+                })
+              }
             }}
           >
-            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
+            <Icon name='image' type='material' size={30} color='#01a699' />
           </TouchableOpacity>
           <TouchableOpacity
             style={{ alignSelf: 'center' }}
@@ -75,8 +119,6 @@ export default function ReceiptScanner() {
                   method: 'POST',
                   body: formData,
                 })
-                  .then((response) => response.json())
-                  .then((json) => setPosts(json.data))
               }
             }}
           >
