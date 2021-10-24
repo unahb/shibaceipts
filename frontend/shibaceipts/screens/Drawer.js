@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
+import { DrawerContentScrollView, DrawerItemList, useDrawerStatus } from '@react-navigation/drawer'
+import { useIsFocused } from '@react-navigation/native'
 import { View } from 'react-native'
 import { Image, Text } from 'react-native-elements'
 
@@ -12,6 +13,19 @@ export default function CustomDrawerContent(props) {
   newState.routes = newState.routes.filter((item) => item.name !== 'View Shibaceipts') //replace "Login' with your route name
 
   const [user, setUser] = useState({})
+
+  const isOpen = useDrawerStatus()
+
+  useEffect(() => {
+    if (MOCKDATA) setUser(MockCurrentUser)
+    else {
+      fetch(`${APILOCATION}get-current-user`, {
+        method: 'GET',
+      })
+        .then((response) => response.json())
+        .then((json) => setUser(json))
+    }
+  }, [isOpen])
 
   useEffect(() => {
     if (MOCKDATA) setUser(MockCurrentUser)

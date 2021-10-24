@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, View, TouchableOpacity, StyleSheet } from 'react-native'
 import { Card, Button, Icon, Text, Image } from 'react-native-elements'
+import { useIsFocused } from '@react-navigation/native'
+
 import { MockMySchibaceipts } from '../mock_backend'
 import { MOCKDATA, APILOCATION } from '../constants'
 
@@ -18,7 +20,19 @@ const renderItem = (item, navigation) => {
 
 export default function MyShibaceipts({ navigation }) {
   const [shibaceipts, setShibaceipts] = useState([])
+  const isFocused = useIsFocused()
 
+  useEffect(() => {
+    if (MOCKDATA) setShibaceipts(MockPosts)
+    else {
+      fetch(`${APILOCATION}get-current-user-shibaceipts`, {
+        method: 'GET',
+      })
+        .then((response) => response.json())
+        .then((json) => setShibaceipts(json.data))
+    }
+  }, [isFocused])
+  
   useEffect(() => {
     if (MOCKDATA) setShibaceipts(MockPosts)
     else {
