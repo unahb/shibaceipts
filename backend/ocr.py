@@ -2,7 +2,14 @@
 import json
 from os import replace
 import requests
-
+import random
+from PIL import Image
+import base64
+import json
+from base64 import b64encode
+import math
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 # Document
 
 
@@ -63,10 +70,6 @@ def ocr(image_path):
 
 
 def annotate_img(image_path, name_boxes, price_boxes):
-    import matplotlib.pyplot as plt
-    import matplotlib.patches as patches
-    from PIL import Image
-
     path_split = image_path.split(".")
     if len(path_split) == 1:
         new_path = image_path + "_annotated"
@@ -96,23 +99,23 @@ def annotate_img(image_path, name_boxes, price_boxes):
     plt.axis('off')
     plt.savefig(new_path, dpi=600)
 
-    # # upload the image to imgur
-    # client_id = '678b119f0fd6be0'
-    # headers = {"Authorization": 'Client-ID ' + client_id}
-    # api_key = 'bbe58733b5b752b0bca73eedb727d265e13f16c8'
-    # url = "https://api.imgur.com/3/upload.json"
-    # r = requests.post(
-    #     url,
-    #     headers=headers,
-    #     data={
-    #         'key': api_key,
-    #         'image': b64encode(open("generated_images/final.png", 'rb').read()),
-    #         'type': 'base64',
-    #         'name': file_name,
-    #         'title': file_name
-    #     }
-    # )
-    # return (r.json()['data']['link'])
+    # upload the image to imgur
+    client_id = '678b119f0fd6be0'
+    headers = {"Authorization": 'Client-ID ' + client_id}
+    api_key = 'bbe58733b5b752b0bca73eedb727d265e13f16c8'
+    url = "https://api.imgur.com/3/upload.json"
+    r = requests.post(
+        url,
+        headers=headers,
+        data={
+            'key': api_key,
+            'image': b64encode(open(new_path, 'rb').read()),
+            'type': 'base64',
+            'name': new_path,
+            'title': new_path
+        }
+    )
+    return (r.json()['data']['link'])
     return new_path
 
 
