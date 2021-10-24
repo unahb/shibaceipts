@@ -10,6 +10,8 @@ from base64 import b64encode
 import math
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+import random
+import string
 # Document
 
 
@@ -74,12 +76,16 @@ def ocr(image_path):
 
 
 def annotate_img(image_path, name_boxes, price_boxes):
-    path_split = image_path.split(".")
-    if len(path_split) == 1:
-        new_path = image_path + "_annotated"
-    else:
-        new_path = "".join(path_split[:-1] + ["_annotated", path_split[-1]])
+    # path_split = image_path.split(".")
+    # if len(path_split) == 1:
+    #     new_path = "static/" + "_annotated"
+    # else:
+    #     new_path = "".join(path_split[:-1] + ["_annotated", path_split[-1]])
 
+    letters = string.ascii_lowercase
+    new_path = "static/" + ''.join(random.choice(letters)
+                                   for i in range(10)) + "_annotated"
+    # print(new_path)
     im = Image.open(image_path)
     w, h = im.size
 
@@ -105,14 +111,14 @@ def annotate_img(image_path, name_boxes, price_boxes):
     return new_path
 
 
-# total, receipt_items, nb, pb = ocr("user_data/test_png.png")
-# annotated_path = annotate_img("user_data/test_png.png", nb, pb)
-# print(receipt_items)
-# print(annotated_path)
+total, receipt_items, nb, pb = ocr("user_data/test_png.png")
+annotated_path = annotate_img("user_data/test_png.png", nb, pb)
+print(receipt_items)
+print(annotated_path)
 # total, receipt_items, nb, pb = ocr(
-    # "user_data/IMG_20210925_133223.jpg")
+# "user_data/IMG_20210925_133223.jpg")
 # annotated_path = annotate_img(
-    # "user_data/IMG_20210925_133223.jpg", nb, pb)
+# "user_data/IMG_20210925_133223.jpg", nb, pb)
 # print(receipt_items)
 # print(annotated_path)
 # receipt_items = ocr("user_data/test.jpg")
