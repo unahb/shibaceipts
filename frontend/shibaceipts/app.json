@@ -4,6 +4,14 @@
     "slug": "shibaceipts",
     "version": "1.0.0",
     "orientation": "portrait",
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photoPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ],
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
