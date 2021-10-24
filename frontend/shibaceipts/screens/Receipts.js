@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, Text } from 'react-native'
+import { FlatList, Text, View } from 'react-native'
 import { Card, Button } from 'react-native-elements'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {MockReceipts} from '../mock_backend'
@@ -12,6 +12,8 @@ import { APILOCATION } from '../constants'
 const Stack = createNativeStackNavigator();
 
 const renderReceiptCard = (item, navigation) => {
+  console.log("item tt")
+  console.log(item)
   return (
     <Card>
       {/* Marc help, why is this item.item nested??! */}
@@ -31,16 +33,26 @@ function ReceiptsList({navigation}) {
 }
 
 function SingularReceipt({route}) {
-  const { text } = route.params;
+  const { data } = route.params
+  const entries = Object.entries(data)
   return (
-      <Text>{text}</Text>
+    <FlatList
+      data={entries}
+      // Not guaranteed to be unique?
+      keyExtractor={(item) => item[0]}
+      renderItem={r => {
+        const item_name = r.item[0]
+        const item_price = r.item[1]
+        return (<Text>{item_name} - {item_price}</Text>)
+      }}
+    />
   )
 }
 
 export default function Receipts() {
   return (
       <Stack.Navigator>
-          <Stack.Screen name="Receipts" component={ReceiptsList}></Stack.Screen>
+          <Stack.Screen name="Receipts List" component={ReceiptsList}></Stack.Screen>
           <Stack.Screen name="SingularReceipt" component={SingularReceipt}></Stack.Screen>
       </Stack.Navigator>
   )
