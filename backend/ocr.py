@@ -115,11 +115,3 @@ def annotate_img(image_path, name_boxes, price_boxes):
 # annotated_path = annotate_img("user_data/test_png.png", nb, pb)
 # print(receipt_items)
 # print(annotated_path)
-# total, receipt_items, nb, pb = ocr(
-# "user_data/IMG_20210925_133223.jpg")
-# annotated_path = annotate_img(
-# "user_data/IMG_20210925_133223.jpg", nb, pb)
-# print(receipt_items)
-# print(annotated_path)
-# receipt_items = ocr("user_data/test.jpg")
-# print(receipt_items)
