@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
+import { Icon } from 'react-native-elements'
 import { Camera } from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
 
@@ -25,7 +26,7 @@ export default function ReceiptScanner() {
 
   useEffect(() => {
     ;(async () => {
-      const { status } = await Camera.requestPermissionsAsync()
+      const { status } = await Camera.requestCameraPermissionsAsync()
       setHasPermission(status === 'granted')
     })()
   }, [])
@@ -69,17 +70,19 @@ export default function ReceiptScanner() {
         >
           <TouchableOpacity
             style={{
-              flex: 0.1,
-              alignSelf: 'flex-end',
+              borderWidth: 1,
+              zIndex: 10,
+              borderColor: 'rgba(0,0,0,0.2)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 70,
+              position: 'absolute',
+              bottom: 10,
+              right: 10,
+              height: 70,
+              backgroundColor: '#fff',
+              borderRadius: 100,
             }}
-            onPress={() => {
-              setType(type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back)
-            }}
-          >
-            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ alignSelf: 'left' }}
             onPress={async () => {
               let photo = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -97,34 +100,10 @@ export default function ReceiptScanner() {
                   method: 'POST',
                   body: formData,
                 })
-                  .then((response) => response.json())
-                  .then((json) => setPosts(json.data))
               }
             }}
           >
-            <View
-              style={{
-                borderWidth: 2,
-                borderRadius: '50%',
-                borderColor: 'white',
-                height: 50,
-                width: 50,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <View
-                style={{
-                  borderWidth: 2,
-                  borderRadius: '50%',
-                  borderColor: 'white',
-                  height: 40,
-                  width: 40,
-                  backgroundColor: 'white',
-                }}
-              ></View>
-            </View>
+            <Icon name='image' type='material' size={30} color='#01a699' />
           </TouchableOpacity>
           <TouchableOpacity
             style={{ alignSelf: 'center' }}
@@ -140,8 +119,6 @@ export default function ReceiptScanner() {
                   method: 'POST',
                   body: formData,
                 })
-                  .then((response) => response.json())
-                  .then((json) => setPosts(json.data))
               }
             }}
           >
