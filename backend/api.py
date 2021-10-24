@@ -68,7 +68,7 @@ def new_receipt():
     new_entry["minter"] = userid
     new_entry["location"] = img_url
     new_entry["value"] = total
-    new_entry["expiration"] = str(datetime.now())
+    new_entry["expiration"] = str(datetime.datetime.now())
 
     user_entry = {}
     user_entry["username"] = userid
