@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {MockReceipts} from '../mock_backend'
 import { NavigationContainer } from '@react-navigation/native'
 
+import { APILOCATION } from '../constants'
+
 // import { SingularReceipt } from './SingularReceipt'
 
 const Stack = createNativeStackNavigator();
@@ -13,11 +15,7 @@ const renderReceiptCard = (item, navigation) => {
   return (
     <Card>
       {/* Marc help, why is this item.item nested??! */}
-      <Card.Title>{item.item.receipt.date}</Card.Title> <Card.Divider />{' '}
-      <Card.Image source={{uri: item.item.receipt.image}}></Card.Image>
-      <Button title="More Info"
-        onPress={()=>navigation.navigate("SingularReceipt",
-        {text: item.item.receipt.text})}/>
+      <Card.Image source={{uri: `${APILOCATION}${item.location}`}} onPress={()=>navigation.navigate("SingularReceipt", item)}/>
     </Card>
   )
 }
@@ -26,8 +24,8 @@ function ReceiptsList({navigation}) {
     return (
         <FlatList
             data={MockReceipts}
-            keyExtractor={(item) => item.key}
-            renderItem={(item) => renderReceiptCard(item, navigation)}
+            keyExtractor={(item) => item.location}
+            renderItem={item => renderReceiptCard(item.item, navigation)}
         />
     )
 }
