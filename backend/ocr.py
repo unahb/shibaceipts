@@ -46,8 +46,7 @@ def ocr(image_path):
     total = None
     for sf in response["ExpenseDocuments"][0]["SummaryFields"]:
         # print(sf)
-        if "LabelDetection" in sf and \
-                sf["LabelDetection"]["Text"] == "TOTAL":
+        if "LabelDetection" in sf and "TOTOAL" in sf["LabelDetection"]["Text"] and "SUBTOTAL" not in sf["LabelDetection"]["Text"]:
             total = float(sf["ValueDetection"]["Text"])
             break
 
