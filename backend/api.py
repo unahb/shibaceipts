@@ -99,7 +99,7 @@ def new_receipt():
         item_dict[k] = v
 
     new_receipt['receipt'] = item_dict
-    new_receipt['imgpath'] = annotated_path
+    new_receipt['imgpath'] = f"{annotated_path}.png"
 
     with open("./user_data/receipts.json", "r") as rf:
         decoded_data = json.load(rf)
