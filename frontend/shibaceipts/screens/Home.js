@@ -44,6 +44,7 @@ export default function Home({ navigation }) {
 
   return (
     <View>
+      {/*
       <TouchableOpacity
         style={{
           borderWidth: 1,
@@ -62,6 +63,7 @@ export default function Home({ navigation }) {
       >
         <Icon name='camera' type='material' size={30} color='#01a699' />
       </TouchableOpacity>
+      */}
       <FlatList data={posts} keyExtractor={(item) => item.shibaceipt} renderItem={({ item }) => renderItem(item, navigation)} />
     </View>
   )
