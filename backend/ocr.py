@@ -25,10 +25,10 @@ def ocr(image_path):
 
     # Call Amazon Textract
     # response = textract.detect_document_text(Document={'Bytes': imageBytes})
-    # response = textract.analyze_expense(Document={'Bytes': imageBytes})
-    with open("temp2.json", 'r') as f:
-        json_str = f.read().replace('\'', '\"')
-        response = json.loads(json_str)
+    response = textract.analyze_expense(Document={'Bytes': imageBytes})
+    #with open("temp2.json", 'r') as f:
+    #    json_str = f.read().replace('\'', '\"')
+    #    response = json.loads(json_str)
 
     # with open('temp2.json', 'w') as f:
     #     json.dump(response, f)
