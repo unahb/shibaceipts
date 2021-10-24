@@ -23,6 +23,12 @@ def get_shibaceipts():
         decoded_data = json.load(rf)
         return json.dumps(decoded_data)
 
+@app.route("/get-current-user-shibaceipts", methods=['GET'])
+def get_current_user_shibaceipts():
+    with open("./user_data/shibas.json", "r") as rf:
+        decoded_data = json.load(rf)
+        return json.dumps(decoded_data)
+
 @app.route("/get-current-user", methods=['GET'])
 def get_current_user():
     with open("./user_data/profile.json", "r") as rf:
@@ -31,6 +37,7 @@ def get_current_user():
 
 @app.route("/new-receipt", methods=['POST'])
 def new_receipt():
+    #return json.dumps("{}") #disabled by Marc for now
     # accept an image, save it
     userid = request.form['userid']
     file_name = "raw_images/" + str(userid) + "_" + str(time.time()) + ".png"
@@ -43,7 +50,9 @@ def new_receipt():
         fh.write(base64.b64decode(b64_image[len(header):]))
 
     # run ocr on image and get the total value
-    total, _receipt_items = ocr.ocr(file_name)
+    # total, _receipt_items = ocr.ocr(file_name)
+    total, _receipt_items, nb, pb = ocr.ocr(file_name)
+    annotated_path = ocr.annotate_img(file_name, nb, pb)
 
     # generate string to use to make nft image using the total amount
     # higher value = better nft
@@ -85,6 +94,7 @@ def new_receipt():
     json_obj["minter"] = userid
     json_obj["value"] = total
     json_obj["data"] = item_dict
+    json_obj["imgpath"] = annotated_path
 
     # update the user data
     with open("./user_data/receipts.json", "r") as rf:

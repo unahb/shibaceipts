@@ -1,8 +1,15 @@
-# import boto3
+import boto3
 import json
 from os import replace
 import requests
-
+import random
+from PIL import Image
+import base64
+import json
+from base64 import b64encode
+import math
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 # Document
 
 
@@ -12,14 +19,17 @@ def ocr(image_path):
         imageBytes = bytearray(document.read())
 
     # Amazon Textract client
-    # textract = boto3.client('textract')
+    textract = boto3.client('textract')
 
     # Call Amazon Textract
     # response = textract.detect_document_text(Document={'Bytes': imageBytes})
     # response = textract.analyze_expense(Document={'Bytes': imageBytes})
-    with open("temp.json", 'r') as f:
+    with open("temp2.json", 'r') as f:
         json_str = f.read().replace('\'', '\"')
         response = json.loads(json_str)
+
+    # with open('temp2.json', 'w') as f:
+    #     json.dump(response, f)
 
     # print(response)
 
@@ -37,7 +47,8 @@ def ocr(image_path):
             break
 
     if total == None:
-        raise ValueError("Could not find TOTAL in receipt")
+        total = 5
+        # raise ValueError("Could not find TOTAL in receipt")
 
     receipt_items = []
     name_boxes = []
@@ -63,10 +74,6 @@ def ocr(image_path):
 
 
 def annotate_img(image_path, name_boxes, price_boxes):
-    import matplotlib.pyplot as plt
-    import matplotlib.patches as patches
-    from PIL import Image
-
     path_split = image_path.split(".")
     if len(path_split) == 1:
         new_path = image_path + "_annotated"
@@ -95,29 +102,17 @@ def annotate_img(image_path, name_boxes, price_boxes):
 
     plt.axis('off')
     plt.savefig(new_path, dpi=600)
-
-    # # upload the image to imgur
-    # client_id = '678b119f0fd6be0'
-    # headers = {"Authorization": 'Client-ID ' + client_id}
-    # api_key = 'bbe58733b5b752b0bca73eedb727d265e13f16c8'
-    # url = "https://api.imgur.com/3/upload.json"
-    # r = requests.post(
-    #     url,
-    #     headers=headers,
-    #     data={
-    #         'key': api_key,
-    #         'image': b64encode(open("generated_images/final.png", 'rb').read()),
-    #         'type': 'base64',
-    #         'name': file_name,
-    #         'title': file_name
-    #     }
-    # )
-    # return (r.json()['data']['link'])
     return new_path
 
 
 # total, receipt_items, nb, pb = ocr("user_data/test_png.png")
 # annotated_path = annotate_img("user_data/test_png.png", nb, pb)
+# print(receipt_items)
+# print(annotated_path)
+# total, receipt_items, nb, pb = ocr(
+    # "user_data/IMG_20210925_133223.jpg")
+# annotated_path = annotate_img(
+    # "user_data/IMG_20210925_133223.jpg", nb, pb)
 # print(receipt_items)
 # print(annotated_path)
 # receipt_items = ocr("user_data/test.jpg")

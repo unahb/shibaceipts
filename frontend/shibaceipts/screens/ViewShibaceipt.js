@@ -7,6 +7,7 @@ export default function ViewShibaceipt({ route }) {
   return (
     <View style={{ alignItems: 'center' }}>
       <Image source={{ uri: route.params.location }} style={{ width: 300, height: 300 }} />
+      {route.params.expiration ?
       <Card>
         {' '}
         <Card.Title style={{ fontSize: '30px' }}>Price: {route.params.value}Ð</Card.Title> <Card.Divider />
@@ -15,6 +16,9 @@ export default function ViewShibaceipt({ route }) {
         </Text>
         <Button icon={<Icon style={{ marginRight: 5 }} name='payments' color='#ffffff' />} buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0, marginTop: 5 }} title='BUY NOW' />
       </Card>
+      :
+        <Button icon={<Icon style={{ marginRight: 5 }} name='payments' color='#ffffff' />} buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0, marginTop: 5 }} title='SELL NOW' />
+      }
       <Text style={styles.Text}>Owner: {route.params.owner}</Text>
     </View>
   )
