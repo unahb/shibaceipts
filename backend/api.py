@@ -17,6 +17,7 @@ app = Flask(__name__, static_url_path='/static', static_folder='static')
 opts = jsbeautifier.default_options()
 opts.indent_size = 2
 
+
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
@@ -72,52 +73,40 @@ def new_receipt():
     img_url = nft.generate_nft(
         total, file_name, limit)
 
-    # create the entry to be appended to global.json
-    new_entry = {}
-    new_entry["owner"] = userid
-    new_entry["minter"] = userid
-    new_entry["location"] = img_url
-    new_entry["value"] = total
-    new_entry["expiration"] = str(datetime.datetime.now())
+    # need to update the following
+    # 1. user data (shibas)
+    # 2. user data (receipts)
 
-    user_entry = {}
-    user_entry["username"] = userid
-    user_entry["avatar"] = img_url
-
-    global_entry = {}
-    global_entry["user"] = user_entry
-    global_entry["shibaceipt"] = new_entry
-
-    # update the global data
-    with open("./global_data/global.json", "r") as rf:
+    # update user data(profile)
+    new_shibaceipt = {}
+    new_shibaceipt['location'] = img_url
+    new_shibaceipt['owner'] = userid
+    new_shibaceipt['minter'] = userid
+    new_shibaceipt['value'] = total
+    shiba_wrapper = {}
+    shiba_wrapper['shibaceipt'] = new_shibaceipt
+    with open("./user_data/shibas.json", "r") as rf:
         decoded_data = json.load(rf)
-        decoded_data.update(global_entry)
-    with open("./global_data/global.json", "w") as rf:
+        decoded_data['data'].append(shiba_wrapper)
+    with open("./user_data/shibas.json", "w") as rf:
         rf.write(json.dumps(decoded_data))
 
+    # update user data (receipts)
+    new_receipt = {}
     # create the json version of the items bought and cost
     item_dict = {}
     for k, v in _receipt_items:
         item_dict[k] = v
 
-    # update location, owner, minter and total value
-    json_obj = {}
-    json_obj["location"] = img_url
-    json_obj["owner"] = userid
-    json_obj["minter"] = userid
-    json_obj["value"] = total
-    json_obj["data"] = item_dict
-    json_obj["imgpath"] = annotated_path
+    new_receipt['receipt'] = item_dict
+    new_receipt['imgpath'] = annotated_path
 
-    # update the user data
     with open("./user_data/receipts.json", "r") as rf:
         decoded_data = json.load(rf)
-        decoded_data.update(json_obj)
+        decoded_data['data'].append(new_receipt)
     with open("./user_data/receipts.json", "w") as rf:
-        json.dumps(rf.write(json.dumps(decoded_data)))
-
-    # return nft url to the frontend
-    return json.dumps(decoded_data)
+        rf.write(json.dumps(decoded_data))
+    return {}
 
 
 @app.route("/spending", methods=['POST'])
@@ -151,6 +140,7 @@ def get_current_user_receipts():
     with open("./user_data/receipts.json", "r") as rf:
         decoded_data = json.load(rf)
         return json.dumps(decoded_data)
+
 
 @app.route('/purchase-shibaceipt', methods=['POST'])
 def purchase_shibaceipt():
