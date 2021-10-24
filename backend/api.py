@@ -6,6 +6,8 @@ import ocr
 import nft
 import datetime
 import base64
+import PIL
+from PIL import Image
 
 limit = 400
 
@@ -43,6 +45,7 @@ def new_receipt():
     # return json.dumps("{}") #disabled by Marc for now
     # accept an image, save it
     userid = request.form['userid']
+
     file_name = "raw_images/" + str(userid) + "_" + str(time.time()) + ".png"
     # get image from base64
     b64_image = request.form['receipt']
@@ -52,6 +55,10 @@ def new_receipt():
     with open(file_name, "wb") as fh:
         fh.write(base64.b64decode(b64_image[len(header):]))
 
+    if(request.form['flip']):
+        im = Image.open(file_name)
+        out = im.transpose(PIL.Image.FLIP_LEFT_RIGHT)
+        out.save(file_name)
     # run ocr on image and get the total value
     # total, _receipt_items = ocr.ocr(file_name)
     total, _receipt_items, nb, pb = ocr.ocr(file_name)
