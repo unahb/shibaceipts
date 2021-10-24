@@ -8,11 +8,14 @@ import datetime
 import base64
 import PIL
 from PIL import Image
+import jsbeautifier
 
 limit = 400
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 
+opts = jsbeautifier.default_options()
+opts.indent_size = 2
 
 @app.route("/")
 def hello_world():
@@ -148,6 +151,40 @@ def get_current_user_receipts():
     with open("./user_data/receipts.json", "r") as rf:
         decoded_data = json.load(rf)
         return json.dumps(decoded_data)
+
+@app.route('/purchase-shibaceipt', methods=['POST'])
+def purchase_shibaceipt():
+    price = int(request.form['price'])
+    shibaceipt = request.form['shibaceipt']
+    with open('./user_data/profile.json', 'r') as rf:
+        decoded_data = json.load(rf)
+        new_owner = decoded_data['username']
+        if not price <= decoded_data['account_value']:
+            return json.dumps({'status': 'failure'})
+        else:
+            decoded_data['account_value'] -= price
+    with open('./user_data/profile.json', 'w') as rf:
+        rf.write(jsbeautifier.beautify(json.dumps(decoded_data), opts))
+
+    with open('./global_data/global.json', 'r') as rf:
+        decoded_data = json.load(rf)
+        i = 0
+        shiba = decoded_data['data'][0]
+        while shiba['shibaceipt']['location'] != shibaceipt:
+            i += 1
+            shiba = decoded_data['data'][i]
+        shiba = shiba['shibaceipt']
+        shiba['owner'] = new_owner
+        del shiba['expiration']
+        sliced = decoded_data['data'][0:i] + decoded_data['data'][i+1:]
+    with open('./global_data/global.json', 'w') as rf:
+        rf.write(jsbeautifier.beautify(json.dumps({'data': sliced}), opts))
+    with open('./user_data/shibas.json', 'r') as rf:
+        decoded_data = json.load(rf)
+    decoded_data['data'].append({'shibaceipt': shiba})
+    with open('./user_data/shibas.json', 'w') as rf:
+        rf.write(jsbeautifier.beautify(json.dumps(decoded_data), opts))
+    return json.dumps({'status': 'success'})
 
 
 if __name__ == '__main__':
