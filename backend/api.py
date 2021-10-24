@@ -23,6 +23,12 @@ def get_shibaceipts():
         decoded_data = json.load(rf)
         return json.dumps(decoded_data)
 
+@app.route("/get-current-user-shibaceipts", methods=['GET'])
+def get_current_user_shibaceipts():
+    with open("./user_data/shibas.json", "r") as rf:
+        decoded_data = json.load(rf)
+        return json.dumps(decoded_data)
+
 @app.route("/get-current-user", methods=['GET'])
 def get_current_user():
     with open("./user_data/profile.json", "r") as rf:

@@ -2,18 +2,18 @@
     "data": [
         {
             "shibaceipt": {
-                "location": "https://i.imgur.com/XqQZQ.jpg",
-                "owner": "Billy_Bob",
+                "location": "https://images-ext-1.discordapp.net/external/iQZLSp2Cn3z6w6tWH3HE8jp81G8BikwMfgKGlbHmLvc/https/i.imgur.com/S7LRwNMh.jpg?width=631&height=631",
+                "owner": "ShibaInuLover31",
                 "minter": "Billy_Bob",
-                "value": "13,000"
+                "value": 13000
             }
         },
         {
             "shibaceipt": {
-                "location": "https://i.imgur.com/XqQZQ.jpg",
-                "owner": "twin",
-                "minter": "Billy_Bob",
-                "value": "10,000"
+                "location": "https://images-ext-1.discordapp.net/external/706WHzQKNKemd2j6tA2h4uLzzrEp0PtNmRC-3oVuMrg/https/i.imgur.com/ig6Ee49h.jpg?width=631&height=631",
+                "owner": "ShibaInuLover31",
+                "minter": "TheDogefather",
+                "value": 10000
             }
         }
     ]
