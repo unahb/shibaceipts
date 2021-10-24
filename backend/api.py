@@ -5,6 +5,7 @@ import time
 import ocr
 import nft
 import datetime
+import base64
 
 limit = 400
 
@@ -35,8 +36,11 @@ def new_receipt():
     file_name = "raw_images/" + str(userid) + "_" + str(time.time()) + ".png"
     # get image from base64
     b64_image = request.form['receipt']
+
+    # ugly hard coded
+    header = "data:image/png;base64,"
     with open(file_name, "wb") as fh:
-        fh.write(b64_image.decode('base64'))
+        fh.write(base64.b64decode(b64_image[len(header):]))
 
     # run ocr on image and get the total value
     total, _receipt_items = ocr.ocr(file_name)
